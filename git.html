@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>git.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="git">Git</h1>
+<p>Git est un outil de gestion de code source. Il permet d'enregistrer du code source à un instant T et de le restituer plus tard, si nécessaire. Il permet également d'entretenir en parallèle plusieurs versions d'un même code source. Cette dernière faculté permet une collaboration plus fluide entre plusieurs développeur travaillant sur un même projet.</p>
+<h2 id="travail-en-solo-ou-en-groupe">Travail en solo ou en groupe</h2>
+<ul>
+<li>pour travailler en solo avec une méthode simple, voir <a href="gitflow-solo-basic.md">gitflow-solo-basic.md</a></li>
+<li>pour travailler en solo avec une méthode plus évoluée, voir <a href="gitflow-solo-advanced.md">gitflow-solo-advanced.md</a></li>
+<li>pour travailler en groupe avec une méthode simple, voir <a href="gitflow-github-flow-basic.md">gitflow-github-flow-basic.md</a></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="linux">Linux</h3>
+<p>Avec Debian, dans un terminal, tapez :</p>
+<pre><code>sudo apt install git
+</code></pre>
+<h3 id="macos">MacOS</h3>
+<p>Deux solutions :</p>
+<ol>
+<li>installer XCode</li>
+<li>installer git à partir du site : <a href="https://www.git-scm.com/downloads">Git - Downloads</a></li>
+</ol>
+<p>Si vous décider d'installer git à partir du site, il faut aussi exécuter ces commandes dans un terminal :</p>
+<pre><code>echo &quot;PATH=/usr/local/git/bin:\$PATH&quot; &gt;&gt; ~/.bash_profile
+source ~/.bash_profile
+</code></pre>
+<h3 id="windows">Windows</h3>
+<p>Utiliser l'installeur :</p>
+<ul>
+<li><a href="https://www.git-scm.com/downloads">Git - Downloads</a></li>
+</ul>
+<p>Attention : il faut choisir un éditeur de code autre que <code>notepad</code> (qui servira à taper les messages de commit).</p>
+<h3 id="configuration">Configuration</h3>
+<h4 id="utilisateur">Utilisateur</h4>
+<p>Git a besoin de savoir qui est le développeur qui fait des commits.</p>
+<p>Ouvrir un terminal :</p>
+<pre><code>git config --global user.name &quot;[nom-du-développeur]&quot;
+git config --global user.email &quot;[email-du-développeur]&quot;
+</code></pre>
+<h4 id="%C3%A9diteur">Éditeur</h4>
+<p>Vous pouvez aussi choisir l'éditeur de code avec lequel vous écrirez vos messages de commit.</p>
+<p>Notes pour :</p>
+<ul>
+<li>MacOS : Nano et Vim sont livrés avec le système d'exploitation.</li>
+<li>Windows : Git Bash est livré avec Nano et Vim.</li>
+<li>Linux : Nano est livré avec le système d'exploitation, Vim est installable avec <code>apt</code></li>
+</ul>
+<p>Dans un terminal, tapez :</p>
+<p><code>git config --global core.editor [nom-de-l-éditeur]</code></p>
+<p>Exemple avec l'éditeur de code Nano :</p>
+<p><code>git config --global core.editor nano</code></p>
+<p>Exemple avec l'éditeur de code Vim :</p>
+<p><code>git config --global core.editor vim</code></p>
+<p>Exemple avec l'éditeur de code gedit :</p>
+<p><code>git config --global core.editor gedit</code></p>
+<p>Exemple avec l'éditeur de code Atom :</p>
+<p><code>git config --global core.editor &quot;atom --wait&quot;</code></p>
+<p>Exemple avec l'éditeur de code Sublime Text 3 :</p>
+<p><code>git config --global core.editor &quot;subl -n -w&quot;</code></p>
+<p>Exemple avec l'éditeur de code Visual Studio Code (version open source) :</p>
+<p><code>git config --global core.editor &quot;code --wait&quot;</code></p>
+<p>Exemple avec l'éditeur de code Notepad++ (version 64 bit) :</p>
+<p><code>git config --global core.editor &quot;'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin&quot;</code></p>
+<p>Exemple avec l'éditeur de code Notepad++ (version 32 bit) :</p>
+<p><code>git config --global core.editor &quot;'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin&quot;</code></p>
+<h4 id="diff--merge">Diff &amp; merge</h4>
+<p>Il est aussi possible de définir un outil personnalisé pour comparer (diff) et fusionner (merge) des fichiers.</p>
+<p>L'outil de diff s'utilise comme <code>git diff</code>, pour voir les différences avec une version précédente du code.
+L'outil de merge ne peut être utilisé que quand il y a un conflit après un git <code>git pull</code>.
+Il sert alors à résoudre les conflits.</p>
+<p>Si vous utilisez git dans un VPS, vous n'avez pas le choix, vous devez opter pour un outil de diff ou de merge qui fonctionne dans le terminal.
+Dans ce cas, <code>vimdiff</code> est idéal.</p>
+<p>Si vous utilisez git sur votre poste de travail, vous pouvez utilisez un outil de diff graphique.
+Privilégiez un outil qui est capable de faire un 3-way merge.
+Ce mode de fusion, utilisé lorsqu'il y a un conflit, vous permet de voir le fichier original, la version remote, la version locale et le résultat final que vous allez conserver.
+Personnellement, je recommande <code>kdiff3</code> qui est capable de résoudre tout seul des conflits simples et d'utiliser un 3-way merge sinon.
+En second choix, vous pouvez utiliser <code>meld</code>.
+Utiliser <code>vscode</code> n'est pas idéal car il n'est pas capable de faire de 3-way merge, même s'il ajoute la coloration syntaxique.</p>
+<p>Exemple avec Vimdiff :</p>
+<pre><code>git config --global merge.tool vimdiff
+git config --global diff.tool vimdiff
+</code></pre>
+<p>Exemple avec KDiff3 :</p>
+<pre><code>git config --global merge.tool kdiff3
+git config --global diff.tool kdiff3
+</code></pre>
+<p>Exemple avec Meld :</p>
+<pre><code>git config --global merge.tool meld
+git config --global diff.tool meld
+</code></pre>
+<p>Exemple avec Visual Studio Code :</p>
+<pre><code>git config --global merge.tool vscode
+git config --global mergetool.vscode.cmd &quot;code --wait \$MERGED&quot;
+git config --global diff.tool vscode
+git config --global difftool.vscode.cmd &quot;code --wait --diff \$LOCAL \$REMOTE&quot;
+</code></pre>
+<p>Les commandes suivantes permettent de savoir quels outils sont supportés par git sans configuration particulière :</p>
+<pre><code># liste des outils de diff
+git difftool --tool-help
+
+# liste des outils de merge
+git mergetool --tool-help
+</code></pre>
+<p><strong>Attention</strong> : pour utiliser l'outil de diff que vous venez de configuré, vous devez utiliser :</p>
+<p><code>git difftool</code></p>
+<p><strong>Attention</strong> : et pour utiliser l'outil de merge que vous venez de configuré, vous devez utiliser :</p>
+<p><code>git mergetool</code></p>
+<p>La commande <code>git diff</code> utilisera toujours l'outil de diff par défaut de git (dans le terminal).</p>
+<p>La commande <code>git config --global difftool.prompt false</code> permet en plus de zapper la question <code>Launch 'vimdiff|kdiff3|meld|vscode|else' [Y/n]?</code>avant chaque fichier.</p>
+<p>Pour plus de détails, voir les liens dans la section <a href="#diff-et-merge">Diff et merge</a> de la doc, ci-dessous.</p>
+<h4 id="v%C3%A9rifier-la-configuration">Vérifier la configuration</h4>
+<p>La commande suivante permet d'afficher la configuration de git :</p>
+<p><code>cat ~/.gitconfig</code><br>
+<code>git config --list --show-origin</code>
+<code>git config --list --global</code>
+<code>git config --list --system</code>
+<code>git config --list --local</code></p>
+<p>Vous devriez voir quelque chose qui ressemble au résultat ci-dessous.
+Ici l'utilisateur s'appelle <code>Foo Bar</code>, son email est <code>foo.bar@example.com</code> et il utilise <code>vscode</code> pour fusionner son code et visualiser les différences.</p>
+<pre><code>[user]
+	email = foo.bar@example.com
+	name = Foo Bar
+[merge]
+	tool = vscode
+[mergetool &quot;vscode&quot;]
+	cmd = code --wait $MERGED
+[diff]
+	tool = vscode
+[difftool &quot;vscode&quot;]
+	cmd = code --wait --diff $LOCAL $REMOTE
+</code></pre>
+<h4 id="acc%C3%A8s-ssh">Accès SSH</h4>
+<p>Il peut aussi être judicieux de configurer un accès SSH, ce qui évite de devoir taper son login et son mot de passe à chaque fois que l'on veut pusher du code sur le repo distant.</p>
+<p>Voir les liens dans la section <a href="#github-ou-framagit-gitlab-et-ssh">Github ou Framagit (Gitlab) et SSH</a> de la doc, ci-dessous.</p>
+<h2 id="notions-%C3%A0-conna%C3%AEtre">Notions à connaître</h2>
+<ul>
+<li>repository ou repo : projet géré par git</li>
+<li>dossier <code>.git</code> : le dossier qui contient toutes les données du repo</li>
+<li>fichier <code>.gitignore</code> : fichier qui contient la liste des fichiers que git ne prendra pas en compte quand on fait un <code>git status</code> ou un <code>git diff</code>; on peut aussi forcer la prise en compte de fichiers qui se trouvent dans des dossiers ignorés</li>
+<li>remote : repo distant</li>
+<li>origin : alias / pseudo du repo distant (github ou framagit par exemple) - local : repo sur un poste de travail</li>
+<li>commiter : enregistrer des modifications faites sur des fichiers ou des dossiers</li>
+<li>message de commit : ce message permet de comprendre en quoi consiste les modifications</li>
+<li>zone de staging : sous-dossier du dossier <code>.git</code> dans lequel git copie les fichiers quand on utilise la commande <code>git add</code>; ce sont les fichiers de cette zone qui sont commités</li>
+<li>branches : versions différentes d'un même projet</li>
+<li>branche main (ou master) : la branche principale, c'est la branche par défaut</li>
+<li>merger : mixer le code source de deux branches</li>
+<li>pull request / merge request / PR : demande de code review avant de merger le code</li>
+<li>rebaser : couper une branche et la « re-baser » (faire une bouture) sur un autre commit</li>
+<li>stash : la remise; zone où l'on peut stocker temporairement des modifications en cours</li>
+</ul>
+<h2 id="types-de-branches">Types de branches</h2>
+<p>Attention, ceci n'est pas à prendre au pied de la lettre.</p>
+<p>Il y a quatre catégories de branches, celles de :</p>
+<ul>
+<li>fonctionnalité</li>
+<li>correction de bug</li>
+<li>documentation</li>
+<li>maintenance (modifications sans impact fonctionnel)</li>
+</ul>
+<p>Personnellement, j'utilise les préfixes suivants pour le nom de mes branches :</p>
+<ul>
+<li><code>f-</code> : fonctionnalité</li>
+<li><code>b-</code> : correction de bug</li>
+<li><code>d-</code> : documentation</li>
+<li><code>m-</code> : maintenance</li>
+</ul>
+<p>Cela permet de :</p>
+<ul>
+<li>repérer facilement le type de changement qui sera commité</li>
+<li>m'empêcher de corriger des bugs dans une branche de fonctionnalité</li>
+<li>plannifier mes activités</li>
+</ul>
+<h2 id="commandes-%C3%A0-conna%C3%AEtre">Commandes à connaître</h2>
+<ul>
+<li><code>git add</code> : notifie à git les fichier qu'on veut commiter, c-à-d copie les fichiers dans la zone de staging</li>
+<li><code>git branch</code> : manipule les branches (création, suppression, liste)</li>
+<li><code>git checkout [nom-de-fichier]</code> : restaure un fichier dans son état avant modification, c-a-d annule les modifications</li>
+<li><code>git checkout [nom-de-branche]</code> : change de branche pour aller dans <code>[nom-de-branche]</code></li>
+<li><code>git clone</code> : duplique un repo dans le dossier courant</li>
+<li><code>git commit</code> : enregistre les modification</li>
+<li><code>git diff</code> : affiche les différences entre deux commits</li>
+<li><code>git log</code> : affiche la liste des commits</li>
+<li><code>git merge [nom-de-branche]</code> : mixe le code de la branche <code>[nom-de-branche]</code> dans la branche courante</li>
+<li><code>git pull</code> : rappatrie dans le repo local les modification du repo distant</li>
+<li><code>git push</code> : pousse les modification du repo local dans le repo distant</li>
+<li><code>git rebase main</code> : couper la branche courante et la rebaser sur le dernier commit de la branche main</li>
+<li><code>git reset</code> : notifie à git les fichier qu'on veut plus commiter, c-à-d supprime les fichiers de la zone de staging</li>
+<li><code>git show</code> : affiche les modifications enregistrées dans le dernier commit</li>
+<li><code>git status</code> : affiche le nom de la branche courante, la synchronisation avec <code>origin</code> et l'état des fichiers</li>
+<li><code>git tag</code> : ajoute un tag (le plus souvent un numéro de version) à un commit</li>
+</ul>
+<h2 id="pourquoi-il-ne-faut-pas-utiliser-git-commit--m">Pourquoi il ne faut pas utiliser <code>git commit -m</code></h2>
+<p>Dans la plupart des tutos, vous verrez <code>git commit -m</code> mais ce n'est pas une bonne idée.</p>
+<p>Quand vous travaillez sur un projet réel, et surtout quand vous travaillez à plusieurs, vous avez besoin de savoir exactement ce qu'un commit apporte comme modifications.</p>
+<p>Donner seulement un titre à votre commit, dans la ligne de commande avec l'option <code>-m</code>, ne suffira pas à expliquer le détails des modifications.
+Cela va contraindre vos collaborateurs (ou vous-même) à devoir lire le code source pour comprendre ce que fait le commit.
+Alors que quelques lignes d'explications auraient suffis...</p>
+<p>Pour ajouter ces informations, vous devez laisser tomber l'option <code>-m</code> et utiliser un éditeur de code pour rédiger le message de commit.
+Cela vous permettra de donner un titre à votre commit mais aussi une description détaillée.</p>
+<h2 id="messages-de-commit">Messages de commit</h2>
+<p>Le message de commit se compose au minimum d'un titre.</p>
+<p>Mais il est de bon ton de rajouter des explications supplémentaires.
+Il est très important que le message de commit explique « quoi » et « pourquoi ».
+Le « quoi » indique ce qui a été fait dans le commit.
+Le « pourquoi » indique la raison des modifications.</p>
+<p>Voici un exemple de message de commit :</p>
+<pre><code>F Ajoute un champ &quot;sujet&quot; dans le formulaire de contact
+
+Le champ &quot;sujet&quot; permet aux visiteurs de préciser la raison de leur demande de contact.
+Les sujets étaient inscrits dans le corps du mail et le client n'arrivait pas à trier les mails en fonction de leur priorité.
+
+Github issue #123
+
+[php] [html]
+</code></pre>
+<p>La lettre <code>F</code> indique qu'il s'agit d'une fonctionnalité.
+Ce code indique le type de tâche réalisée dans le commit.</p>
+<p>Voici des codes possibles :</p>
+<ul>
+<li><code>F</code> : fonctionnalité</li>
+<li><code>B</code> : correction de bug</li>
+<li><code>D</code> : documentation</li>
+<li><code>M</code> : maintenance</li>
+</ul>
+<p>Vous pouvez inventer vos propres codes.
+Soyez créatifs mais surtout, soyez cohérents.</p>
+<p>Le terme <code>Github issue #123</code> fait référence à l'identifiant d'un « ticket » (une « issue ») créé dans l'outil « Issue tracker » de Github.</p>
+<p>Les termes <code>[php]</code> et <code>[html]</code> sont des tags qui permettent de faire une recherche rapide de tous les commits en rapport avec un type de modification de code.</p>
+<p>Voici des tags possibles :</p>
+<ul>
+<li><code>[build]</code> : système de build</li>
+<li><code>[db]</code> : database</li>
+<li><code>[config]</code></li>
+<li><code>[controller]</code></li>
+<li><code>[css]</code></li>
+<li><code>[design]</code></li>
+<li><code>[form]</code></li>
+<li><code>[fs]</code> : file system</li>
+<li><code>[html]</code></li>
+<li><code>[js]</code> : Javascript</li>
+<li><code>[model]</code></li>
+<li><code>[php]</code></li>
+<li><code>[route]</code></li>
+<li><code>[sass]</code></li>
+<li><code>[service]</code></li>
+<li><code>[text]</code> : contenu éditorial</li>
+<li><code>[vue]</code></li>
+</ul>
+<p>Pareil qu'avec les codes de tâches, vous pouvez inventer les vôtres.
+Soyez créatifs mais cohérents.</p>
+<h2 id="focus-sur-le-contenu-pr%C3%A9cis-du-message-de-commit">Focus sur le contenu précis du message de commit</h2>
+<ul>
+<li><a href="https://chris.beams.io/posts/git-commit/">How to Write a Git Commit Message</a></li>
+<li><a href="https://driggl.com/blog/a/how-to-write-professional-commits-efficiently">How to write professional messages EFFICIENTLY?</a></li>
+<li><a href="https://gitpraise.com/">Online Git Commit Message Editor | Git Praise</a></li>
+<li><a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">tbaggery - A Note About Git Commit Messages</a></li>
+<li><a href="https://github.com/joelparkerhenderson/git_commit_template">joelparkerhenderson/git_commit_template: Git commit template for better commit messages</a></li>
+</ul>
+<h2 id="le-fichier-gitignore">Le fichier <code>.gitignore</code></h2>
+<p>Ce fichier dit à Git de ne pas tenir compte de certain fichier.
+Ou il force la prise en compte de fichiers se trouvant dans un dossier ignoré.</p>
+<p>Exemple d'un fichier <code>.gitignore</code> :</p>
+<pre><code>/config/db.yml
+/config/mail.yml
+/cache/*
+!cache/.gitkeep
+</code></pre>
+<p>Le slash <code>/</code> qui précède les chemins désigne le dossier du repo.
+Si le repo se trouve dans <code>~/projects/foo</code>, alors <code>/config/db.yml</code> désigne <code>~/projects/foo/config/db.yml</code>.</p>
+<p>Explications :</p>
+<ul>
+<li><code>/config/db.yml</code> : demande d'ignorer le fichier <code>db.yml</code> qui se trouve dans le dossier <code>config</code></li>
+<li><code>/cache/*</code> : demande d'ignorer tous les fichiers qui se trouve dans le dossier <code>cache</code></li>
+<li><code>!cache/.gitkeep</code> : demande de forcer la prise en compte du fichier <code>.gitkeep</code> qui se trouve dans le dossier <code>cache</code><br>
+C'est donc une demande d'exception par rapport à la règle précédente</li>
+</ul>
+<h2 id="utilisation">Utilisation</h2>
+<p>Pour des cas d'usage typiques, voir :</p>
+<ul>
+<li><a href="gitflow-solo-basic.md">gitflow-solo-basic.md</a></li>
+<li><a href="gitflow-solo-advanced.md">gitflow-solo-advanced.md</a></li>
+<li><a href="gitflow-github-flow-basic.md">gitflow-github-flow-basic.md</a></li>
+<li><a href="gitflow-github-flow-advanced.md">gitflow-github-flow-advanced.md</a></li>
+</ul>
+<h3 id="cr%C3%A9ation-du-repo-en-local">Création du repo en local</h3>
+<pre><code># créez le dossier du projet
+mkdir [dossier-du-projet]
+# allez dans le dossier du projet
+cd [dossier-du-projet]
+# créez un fichier `README.md` dans le dossier du projet
+nano README.md
+# todo: rédigez le contenu de la doc
+# initialisez le repo git
+git init
+# ajoutez le fichier `README.md` dans la zone de staging
+git add README.md
+# créez un premier commit
+git commit
+# todo: rédigez votre message de commit
+</code></pre>
+<h3 id="cr%C3%A9ation-du-repo-sur-github--framagit--bitbucket">Création du repo sur github / framagit / bitbucket</h3>
+<p>Créez le repo sur le site :</p>
+<ul>
+<li>s'il y a lieu, créez un compte sur le site</li>
+<li>sur le site, créez un nouveau repo (attention à donner le même nom que celui du dossier en local)</li>
+</ul>
+<h4 id="pour-lier-votre-repo-local-%C3%A0-un-repo-distant-en-utilisant-le-protocole-https">Pour lier votre repo local à un repo distant en utilisant le protocole HTTPS</h4>
+<p>Sur le site, copiez l'url du repo au format HTTPS (de la forme https://github.com/[login]/[nom-du-repo].git)</p>
+<p>Puis dans le terminal :</p>
+<pre><code>git remote add origin https://github.com/[login]/[nom-du-repo].git
+git push -u origin main
+</code></pre>
+<h4 id="pour-lier-votre-repo-local-%C3%A0-un-repo-distant-en-utilisant-le-protocole-ssh">Pour lier votre repo local à un repo distant en utilisant le protocole SSH</h4>
+<p>Sur le site, copiez l'url du repo au format SSH (de la forme git@github.com:[login]/[nom-du-repo].git)</p>
+<p>Puis dans le terminal :</p>
+<pre><code>git remote add origin git@github.com:[login]/[nom-du-repo].git
+git push -u origin main
+</code></pre>
+<h4 id="fl%C3%BBte--je-me-suis-tromp%C3%A9-il-fallait-du-https--ssh">Flûte ! Je me suis trompé, il fallait du HTTPS / SSH :</h4>
+<p>Pas de panique, on peut changer le repo <code>origin</code> quand on veut.</p>
+<p>Pour lier le repo local à un repo distant en HTTPS</p>
+<pre><code>git remote set-utl origin https://github.com/[login]/[nom-du-repo].git
+</code></pre>
+<p>Ou pour lier le repo local à un repo distant en SSH</p>
+<pre><code>git remote set-utl origin git@github.com:[login]/[nom-du-repo].git
+</code></pre>
+<h3 id="enregistrer-des-modifications">Enregistrer des modifications</h3>
+<p>Il est important d'enregistrer des ensembles de modifications cohérents.</p>
+<p>Par exemple, un commit peut contenir :</p>
+<ul>
+<li>la création d'une fonctionnalité (mais surtout pas plusieurs)</li>
+<li>l'amélioration d'une fonctionnalité</li>
+<li>la suppression d'une fonctionnalité</li>
+<li>une correction de bug</li>
+<li>plusieurs corrections d'orthographe</li>
+<li>la création de documentation</li>
+<li>l'amélioration de documentation</li>
+<li>la suppression de documentation</li>
+</ul>
+<p>D'abord on ajoute les fichiers dans la zone de staging.</p>
+<pre><code># ajouter un seul fichier
+git add [nom-du-fichier]
+
+# ajouter plusieurs fichiers :
+git add [nom-du-fichier1] [nom-du-fichier2] [nom-du-fichier3] [...]
+
+# ajouter des portions de fichier en mode interactif
+# ce mode permet d'ajouter des parties de fichier (des patches), au lieu d'ajouter le fichier entier
+git add -p
+
+# ajouter des fichiers en mode interactif (usage avancé)
+# ce mode permet de contrôler l'ajout de fichier entier ou de partie de fichier avec une interface interactive
+git add -i
+</code></pre>
+<p>On vérifie que tout ce qu'on veut commiter a bien été ajouté dans la zone de staging.</p>
+<pre><code># vérifiez les fichiers qui seront commités
+git status
+# vérifiez le code qui sera commité
+git diff --staged
+</code></pre>
+<p>Si on se rend compte qu'on a ajouter par erreur un fichier, on peut le supprimer de la zone de staging.</p>
+<pre><code># notifier git de ne pas commiter le fichier [nom-du-fichier]
+git reset [nom-du-fichier]
+</code></pre>
+<p>Puis on commit.</p>
+<pre><code># commiter en spécifiant juste un titre de commit
+git commit
+# rédiger votre message de commit
+# exemple : Ajout de la fonctionnalité foo bar baz
+
+# ou commiter en spécifiant un titre de commit et une description détaillée
+git commit
+# note: un éditeur de code s'ouvre
+# tapez le titre du commit dans la première ligne
+# laissez une ligne vide entre le titre et les commentaires
+# tapez les commentaires
+# enregistrez et quitter totalement l'éditeur de code
+# warning: tant que l'éditeur de code reste ouvert, la commande ne termine pas son travail
+</code></pre>
+<h3 id="publier-des-modifications">Publier des modifications</h3>
+<pre><code># pousser les modifications de la branche courante sur la branche [nom-de-branche] du repo distant et demander à git de retenir cette configuration
+git push -u origin [nom-de-branche]
+
+# pousser les modifications de la branche courante sur la branche par défaut du repo distant (configurée au préalable)
+git push
+</code></pre>
+<h3 id="v%C3%A9rifier-l%C3%A9tat-du-repo-local">Vérifier l'état du repo local</h3>
+<pre><code># synchroniser les dossiers `.git` du repo distant et du repo local
+git fetch
+# vérifier de la branche courante, des commits en avance (ou pas) et des modifications en cours
+git status
+
+# afficher des modifications en cours (qui ne seront pas commitées)
+git diff
+# afficher des modifications qui seront commitées
+git diff --staged
+
+# afficher la liste des commits (en ordre anti-chronologique) avec les commentaires
+git log
+# afficher la liste simplifiée des commits (sans les commentaires)
+git log --oneline
+</code></pre>
+<h2 id="jai-un-warning-quand-je-tente-un-git-pull">J'ai un warning quand je tente un <code>git pull</code></h2>
+<p>En effet, si vous n'avez pas configuré comment la commande <code>git pull</code> doit procédrer pour synchroniser un repo local et un repo distant, vous allez avoir le message d'erreur suivant :</p>
+<pre><code>$ git pull
+warning: Tirer sans spécifier comment réconcilier les branches divergentes
+est découragé. Vous pouvez éliminer ce message en lançant une des
+commandes suivantes avant votre prochain tirage :
+  git config pull.rebase false  # fusion (stratégie par défaut)
+  git config pull.rebase true   # rebasage
+  git config pull.ff only       # avance rapide seulement
+Vous pouvez remplacer &quot;git config&quot; par &quot;git config --global&quot; pour que
+ce soit l'option par défaut pour tous les dépôts. Vous pouvez aussi
+passer --rebase, --no-rebase ou --ff-only sur la ligne de commande pour
+remplacer à l'invocation la valeur par défaut configurée.Déjà à jour.
+</code></pre>
+<p>Mais que choisir parmi ces options ? Réponses ci-dessous.</p>
+<p>Pour plus de détails voir l'article suivant (en anglais) : <a href="https://salferrarello.com/git-warning-pulling-without-specifying-how-to-reconcile-divergent-branches-is-discouraged/">Git warning: Pulling without specifying how to reconcile divergent branches is discouraged | Sal Ferrarello</a></p>
+<h4 id="dans-tous-les-cas">Dans tous les cas</h4>
+<p>Optez pour l'option globale suivante et jetez un coup d'œil ci-dessous pour les options locales :</p>
+<pre><code>git config --global pull.ff only
+</code></pre>
+<p>Cette option est bien dans la mesure où elle tenter d'utiliser le mode de synchronisation <code>fast forward</code> (c'est à dire un mode chronologique simple) quand c'est possible.
+Si ce n'est pas possible, <code>git pull</code> affichera un message d'erreur et ne fera rien.
+Ce qui vous laissera la possibilité de choisir entre le mode <code>git pull --ff-no</code> (qui force un <code>merge</code>) et le mode <code>git pull --rebase</code> (qui force un <code>rebase</code>).</p>
+<h4 id="vous-travaillez-seul-et-uniquement-sur-la-branche-main">Vous travaillez seul et uniquement sur la branche main</h4>
+<p>Dans ce cas, l'option <code>git config pull.ff only</code> est tout indiquée.</p>
+<h4 id="vous-travaillez-seul-sur-plusieurs-branches">Vous travaillez seul sur plusieurs branches</h4>
+<p>Dans ce cas, l'option <code>git config pull.rebase true</code> est tout indiquée.</p>
+<h4 id="vous-travaillez-%C3%A0-plusieurs-sur-une-ou-plusieurs-branches">Vous travaillez à plusieurs (sur une ou plusieurs branches)</h4>
+<p>Pareil que dans le cas précédent, l'option <code>git config pull.rebase true</code> est tout indiquée.</p>
+<h2 id="doc">Doc</h2>
+<h3 id="utilisation">Utilisation</h3>
+<ul>
+<li><a href="https://git-scm.com/">Git</a></li>
+</ul>
+<h3 id="tutriels-en-ligne">Tutriels en ligne</h3>
+<ul>
+<li><a href="https://githowto.com/">Git How To: Guided Git Tutorial</a></li>
+<li><a href="https://learngitbranching.js.org/">Learn Git Branching</a></li>
+</ul>
+<h3 id="git-flow">Git flow</h3>
+<h4 id="configuration">Configuration</h4>
+<ul>
+<li><a href="https://help.github.com/articles/associating-text-editors-with-git/">Associating text editors with Git - User Documentation</a></li>
+<li><a href="https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration">Git - Git Configuration</a></li>
+</ul>
+<h4 id="diff-et-merge">Diff et merge</h4>
+<ul>
+<li><a href="https://stackoverflow.com/questions/6412516/configuring-diff-tool-with-gitconfig">git - Configuring diff tool with .gitconfig - Stack Overflow</a></li>
+<li><a href="https://blog.soltysiak.it/en/2017/01/set-visual-studio-code-as-default-git-editor-and-diff-tool/">Set Visual Studio Code as default git editor and diff tool – Soltys Blog</a></li>
+<li><a href="https://stackoverflow.com/questions/44549733/how-to-use-visual-studio-code-as-the-default-editor-for-git-mergetool">How to use Visual Studio Code as the default editor for Git MergeTool - Stack Overflow</a></li>
+</ul>
+<h4 id="notions-de-base">Notions de base</h4>
+<ul>
+<li><a href="https://docs.gitlab.com/ce/workflow/gitlab_flow.html">Introduction to GitLab Flow | GitLab</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows">Git Workflow | Atlassian Git Tutorial</a></li>
+</ul>
+<h4 id="github-ou-framagit-gitlab-et-ssh">Github ou Framagit (Gitlab) et SSH</h4>
+<ul>
+<li><a href="https://help.github.com/articles/connecting-to-github-with-ssh/">Connecting to GitHub with SSH - User Documentation</a></li>
+<li><a href="https://docs.gitlab.com/ee/ssh/">GitLab and SSH keys | GitLab</a></li>
+</ul>
+<h4 id="le-git-flow-pr%C3%A9conis%C3%A9-par-github">Le git flow préconisé par github</h4>
+<ul>
+<li><a href="http://scottchacon.com/2011/08/31/github-flow.html">GitHub Flow – Scott Chacon</a></li>
+</ul>
+<h4 id="le-git-flow-utilis%C3%A9-pour-le-d%C3%A9veloppement-du-kernel-linux">Le git flow utilisé pour le développement du kernel linux</h4>
+<ul>
+<li><a href="https://jeffkreeftmeijer.com/git-flow/">Using git-flow to automate your git branching workflow</a></li>
+</ul>
+<h4 id="notions-avanc%C3%A9es">Notions avancées</h4>
+<ul>
+<li><a href="https://blog.osteele.com/2008/05/my-git-workflow/">My Git Workflow</a></li>
+<li><a href="https://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide">Git Workflow Guide with Examples for Pros | Toptal</a></li>
+</ul>
+<h4 id="messages-de-commit">Messages de commit</h4>
+<ul>
+<li><a href="https://chris.beams.io/posts/git-commit/">How to Write a Git Commit Message</a></li>
+<li><a href="https://driggl.com/blog/a/how-to-write-professional-commits-efficiently">How to write professional messages EFFICIENTLY?</a></li>
+<li><a href="https://gitpraise.com/">Online Git Commit Message Editor | Git Praise</a></li>
+<li><a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">tbaggery - A Note About Git Commit Messages</a></li>
+<li><a href="https://github.com/joelparkerhenderson/git_commit_template">joelparkerhenderson/git_commit_template: Git commit template for better commit messages</a></li>
+</ul>
+
+</body>
+</html>
